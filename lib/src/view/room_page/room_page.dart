@@ -4,7 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:mezcreen/env.dart';
 import 'package:mezcreen/src/utils/constant_colors.dart';
-import 'package:mezcreen/src/utils/icon_utils.dart';
+import 'package:mezcreen/src/utils/utils.dart';
 import 'package:mezcreen/src/view/room_page/add_room_card.dart';
 
 import 'room_data_card.dart';
@@ -22,21 +22,21 @@ class _RoomsPageState extends State<RoomsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ConstantColors.bgColor,
-      // appBar: AppBar(title: const Text("Rooms")),
       body: DefaultTextStyle(
         style: Theme.of(context).textTheme.displayMedium!,
         textAlign: TextAlign.center,
-        child: FutureBuilder<DataSnapshot>(
-          future: FirebaseDatabase.instance
+        child: StreamBuilder<DatabaseEvent>(
+          stream: FirebaseDatabase.instance
               .ref()
               .child(rootNode)
-              .get(), // a previously-obtained Future<String> or null
+              .onValue, // listen for real-time updates
           builder:
-              (BuildContext context, AsyncSnapshot<DataSnapshot> snapshot) {
+              (BuildContext context, AsyncSnapshot<DatabaseEvent> snapshot) {
             List<Widget> children = <Widget>[];
             if (snapshot.hasData) {
+              // handle data
               Map<dynamic, dynamic> rooms =
-                  snapshot.data!.value as Map<dynamic, dynamic>;
+                  snapshot.data!.snapshot.value as Map<dynamic, dynamic>;
               log("rooms $rooms");
               rooms.forEach((key, value) {
                 log("value $value");
@@ -53,6 +53,7 @@ class _RoomsPageState extends State<RoomsPage> {
                 const AddRoomCard(),
               );
             } else if (snapshot.hasError) {
+              // handle error
               children = <Widget>[
                 const Icon(
                   Icons.error_outline,
@@ -65,6 +66,7 @@ class _RoomsPageState extends State<RoomsPage> {
                 ),
               ];
             } else {
+              // show loading indicator
               children = const <Widget>[
                 SizedBox(
                   width: 60,

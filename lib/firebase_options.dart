@@ -47,33 +47,33 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCj3RRj-bVmuBaaRhsUC7y0mMP-L6OD4DY',
-    appId: '1:652541548017:web:a373cbf6708b523d012050',
-    messagingSenderId: '652541548017',
-    projectId: 'test-a5db5',
-    authDomain: 'test-a5db5.firebaseapp.com',
-    databaseURL: 'https://test-a5db5-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'test-a5db5.appspot.com',
-    measurementId: 'G-0JS80X3YSC',
+    apiKey: 'AIzaSyD1YYiQAYL_qVlOAr__AoswtWWJd9CuHYg',
+    appId: '1:826817699178:web:dff2529edbe464d0e6d913',
+    messagingSenderId: '826817699178',
+    projectId: 'mezcreen',
+    authDomain: 'mezcreen.firebaseapp.com',
+    databaseURL: 'https://mezcreen-default-rtdb.firebaseio.com',
+    storageBucket: 'mezcreen.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCSQsh-9Nk9LHjo39WCxIsGRhXjlQK1hHg',
-    appId: '1:652541548017:android:fafe823a053e00dc012050',
-    messagingSenderId: '652541548017',
-    projectId: 'test-a5db5',
-    databaseURL: 'https://test-a5db5-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'test-a5db5.appspot.com',
+    apiKey: 'AIzaSyDY1BzeA2v5-S-cvXFl_quVa7WTxzsUvuI',
+    appId: '1:826817699178:android:03a5c2a500b1770ee6d913',
+    messagingSenderId: '826817699178',
+    projectId: 'mezcreen',
+    databaseURL: 'https://mezcreen-default-rtdb.firebaseio.com',
+    storageBucket: 'mezcreen.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAiTIqEcC22KwiRLjsLBIOlj68aP_k9jzg',
-    appId: '1:652541548017:ios:6d45a2e5223bae71012050',
-    messagingSenderId: '652541548017',
-    projectId: 'test-a5db5',
-    databaseURL: 'https://test-a5db5-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'test-a5db5.appspot.com',
-    iosClientId: '652541548017-39daqglvsuu6eiojd1g1na22j7u2s198.apps.googleusercontent.com',
+    apiKey: 'AIzaSyCgIiyeh4p1_l9kXVLVePYN9GWiYTksmYw',
+    appId: '1:826817699178:ios:01e7e8263ba9e64be6d913',
+    messagingSenderId: '826817699178',
+    projectId: 'mezcreen',
+    databaseURL: 'https://mezcreen-default-rtdb.firebaseio.com',
+    storageBucket: 'mezcreen.appspot.com',
+    iosClientId:
+        '826817699178-lvnvgl66v70acsa7p0i6dc80ik6hpjm7.apps.googleusercontent.com',
     iosBundleId: 'com.example.mezcreen',
   );
 }

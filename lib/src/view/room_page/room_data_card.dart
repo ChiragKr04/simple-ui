@@ -42,7 +42,7 @@ class RoomDataCard extends StatelessWidget {
               style: ConstantTextStyle.cardSubTitleStyle,
             ),
             Text(
-              "${roomData["devices"].length} devices",
+              "${roomData.containsKey("devices") ? roomData["devices"].length : "0"} devices",
               style: ConstantTextStyle.cardTitleStyle,
             ),
           ],

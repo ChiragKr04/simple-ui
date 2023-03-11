@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'dart:math';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mezcreen/src/model/global_models.dart';
 
@@ -8,6 +9,9 @@ class RoomController {
     String roomName,
     String roomType,
   ) {
-    ref.read(roomModelProvider).addNewRoom();
+    ref.read(roomModelProvider).addNewRoom(
+          roomName,
+          roomType,
+        );
   }
 }

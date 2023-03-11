@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:mezcreen/env.dart';
@@ -38,21 +40,26 @@ class _DevicesPageState extends State<DevicesPage> {
       body: DefaultTextStyle(
         style: Theme.of(context).textTheme.displayMedium!,
         textAlign: TextAlign.center,
-        child: FutureBuilder<DataSnapshot>(
-          future: FirebaseDatabase.instance
+        child: StreamBuilder<DatabaseEvent>(
+          stream: FirebaseDatabase.instance
               .ref()
               .child("$rootNode/${widget.roomKey}/devices")
-              .get(), // a previously-obtained Future<String> or null
+              .onValue,
           builder:
-              (BuildContext context, AsyncSnapshot<DataSnapshot> snapshot) {
+              (BuildContext context, AsyncSnapshot<DatabaseEvent> snapshot) {
             List<Widget> children = <Widget>[];
             if (snapshot.hasData) {
+              log("DEVICE DATA ${snapshot.data!.snapshot.value}");
               Map<dynamic, dynamic> rooms =
-                  snapshot.data!.value as Map<dynamic, dynamic>;
+                  snapshot.data!.snapshot.value == null
+                      ? {}
+                      : snapshot.data!.snapshot.value as Map<dynamic, dynamic>;
               rooms.forEach(
                 (key, value) {
                   children.add(DeviceDataCard(
                     deviceData: value,
+                    roomKey: widget.roomKey,
+                    deviceKey: key,
                   ));
                 },
               );
@@ -85,7 +92,7 @@ class _DevicesPageState extends State<DevicesPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const AddDeviceCard(),
+                  AddDeviceCard(roomKey: widget.roomKey),
                   Expanded(
                     child: GridView.builder(
                       gridDelegate:

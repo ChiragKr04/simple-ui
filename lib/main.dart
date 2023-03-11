@@ -5,13 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcreen/env.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:mezcreen/firebase_options.dart';
 
 import 'package:mezcreen/sampleData.dart';
 import 'package:mezcreen/src/view/room_page/room_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await checkForTestData();
   runApp(const ProviderScope(child: MyApp()));
 }

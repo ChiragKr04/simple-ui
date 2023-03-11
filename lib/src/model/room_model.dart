@@ -2,10 +2,22 @@ import 'dart:developer';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:mezcreen/env.dart';
 
 class RoomModelData extends ChangeNotifier {
-  void addNewRoom() {
+  void addNewRoom(
+    String roomName,
+    String roomType,
+  ) {
     log("NEW ROOM ADDED PVD");
-    FirebaseDatabase.instance.ref();
+    final newData = {
+      "devices": null,
+      "name": roomName,
+    };
+    final databaseRef = FirebaseDatabase.instance.ref();
+    databaseRef
+        .child(rootNode)
+        .child("$roomName-${DateTime.now().millisecondsSinceEpoch}")
+        .set(newData);
   }
 }
