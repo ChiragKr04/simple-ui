@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mezcreen/src/controller/device_controller.dart';
+import 'package:mezcreen/src/controller/global_controller.dart';
 import 'package:mezcreen/src/utils/constant_strings.dart';
 
 import '../../utils/constant_colors.dart';
@@ -41,12 +41,8 @@ class ACCounterState extends State<ACCounter> {
               setState(() {
                 if (acCounter > 16) {
                   acCounter--;
-                  DeviceController().updateDeviceValue(
-                    ref,
-                    widget.roomKey,
-                    widget.deviceKey,
-                    acCounter,
-                  );
+                  ref.read(deviceController).updateDeviceValue(
+                      widget.roomKey, widget.deviceKey, acCounter);
                 }
               });
             },
@@ -73,12 +69,8 @@ class ACCounterState extends State<ACCounter> {
               setState(() {
                 if (acCounter < 30) {
                   acCounter++;
-                  DeviceController().updateDeviceValue(
-                    ref,
-                    widget.roomKey,
-                    widget.deviceKey,
-                    acCounter,
-                  );
+                  ref.read(deviceController).updateDeviceValue(
+                      widget.roomKey, widget.deviceKey, acCounter);
                 }
               });
             },

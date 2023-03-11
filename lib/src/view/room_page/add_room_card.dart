@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mezcreen/src/controller/room_controller.dart';
+import 'package:mezcreen/src/controller/global_controller.dart';
 import 'package:mezcreen/src/utils/constant_style.dart';
 import 'package:mezcreen/src/utils/utils.dart';
 import 'package:mezcreen/src/view/custom_widgets/custom_button.dart';
@@ -39,11 +39,10 @@ class AddRoomCard extends ConsumerWidget {
                             child: const Text("Add"),
                             onPressed: () {
                               log("New room added ${ctrl.text} $dropDownValue");
-                              RoomController().addNewRoom(
-                                ref,
-                                ctrl.text.trim(),
-                                dropDownValue,
-                              );
+                              ref.read(roomController).addNewRoom(
+                                    ctrl.text.trim(),
+                                    dropDownValue,
+                                  );
                               Navigator.pop(context);
                             },
                           ),

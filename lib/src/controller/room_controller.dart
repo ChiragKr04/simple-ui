@@ -1,17 +1,23 @@
-import 'dart:math';
+import 'dart:developer';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mezcreen/src/model/global_models.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
+import 'package:mezcreen/env.dart';
 
-class RoomController {
+class RoomController extends ChangeNotifier {
   void addNewRoom(
-    WidgetRef ref,
     String roomName,
     String roomType,
   ) {
-    ref.read(roomModelProvider).addNewRoom(
-          roomName,
-          roomType,
-        );
+    log("NEW ROOM ADDED PVD");
+    final newData = {
+      "devices": null,
+      "name": roomName,
+    };
+    final databaseRef = FirebaseDatabase.instance.ref();
+    databaseRef
+        .child(rootNode)
+        .child("$roomName-${DateTime.now().millisecondsSinceEpoch}")
+        .set(newData);
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mezcreen/src/controller/device_controller.dart';
+import 'package:mezcreen/src/controller/global_controller.dart';
 
 import '../../utils/constant_colors.dart';
 import '../../utils/constant_style.dart';
@@ -40,12 +40,8 @@ class _FanCounterState extends State<FanCounter> {
               setState(() {
                 if (fanCounter > 0) {
                   fanCounter--;
-                  DeviceController().updateDeviceValue(
-                    ref,
-                    widget.roomKey,
-                    widget.deviceKey,
-                    fanCounter,
-                  );
+                  ref.read(deviceController).updateDeviceValue(
+                      widget.roomKey, widget.deviceKey, fanCounter);
                 }
               });
             },
@@ -72,12 +68,8 @@ class _FanCounterState extends State<FanCounter> {
               setState(() {
                 if (fanCounter < 4) {
                   fanCounter++;
-                  DeviceController().updateDeviceValue(
-                    ref,
-                    widget.roomKey,
-                    widget.deviceKey,
-                    fanCounter,
-                  );
+                  ref.read(deviceController).updateDeviceValue(
+                      widget.roomKey, widget.deviceKey, fanCounter);
                 }
               });
             },

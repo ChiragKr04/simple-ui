@@ -1,37 +1,62 @@
-import 'dart:math';
+import 'dart:developer';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mezcreen/src/model/global_models.dart';
-import 'package:mezcreen/src/utils/utils.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
+import 'package:mezcreen/env.dart';
 
-class DeviceController {
+class DeviceController extends ChangeNotifier {
   void addNewDevice(
-    WidgetRef ref,
     String roomKey,
     String deviceName,
     String deviceType,
+    int deviceValue,
   ) {
-    ref.read(deviceModalProvider).addNewDevice(
-          roomKey,
-          deviceName,
-          deviceType,
-          MyUtils.generateDeviceValue(deviceType.toLowerCase()),
-        );
+    log("NEW DEVICE ADDED PVD");
+    final newData = {
+      "name": deviceName,
+      "type": deviceType.toLowerCase(),
+      "value": deviceValue,
+    };
+    final databaseRef = FirebaseDatabase.instance.ref();
+    databaseRef
+        .child(rootNode)
+        .child(roomKey)
+        .child("devices")
+        .child("$deviceName-${DateTime.now().millisecondsSinceEpoch}")
+        .set(newData);
   }
 
-  void updateDeviceName(
-      WidgetRef ref, String roomKey, String deviceKey, String deviceName) {
-    ref.read(deviceModalProvider).updateDevice(roomKey, deviceKey, deviceName);
+  void updateDevice(String roomKey, String deviceKey, String deviceName) {
+    final databaseRef = FirebaseDatabase.instance.ref();
+    databaseRef
+        .child(rootNode)
+        .child(roomKey)
+        .child("devices")
+        .child(deviceKey)
+        .update({
+      "name": deviceName,
+    });
   }
 
-  void updateDeviceValue(
-      WidgetRef ref, String roomKey, String deviceKey, int deviceValue) {
-    ref
-        .read(deviceModalProvider)
-        .updateDeviceValue(roomKey, deviceKey, deviceValue);
+  void deleteDevice(String roomKey, String deviceKey) {
+    final databaseRef = FirebaseDatabase.instance.ref();
+    databaseRef
+        .child(rootNode)
+        .child(roomKey)
+        .child("devices")
+        .child(deviceKey)
+        .remove();
   }
 
-  void deleteDevice(WidgetRef ref, String roomKey, String deviceKey) {
-    ref.read(deviceModalProvider).deleteDevice(roomKey, deviceKey);
+  void updateDeviceValue(String roomKey, String deviceKey, int deviceValue) {
+    final databaseRef = FirebaseDatabase.instance.ref();
+    databaseRef
+        .child(rootNode)
+        .child(roomKey)
+        .child("devices")
+        .child(deviceKey)
+        .update({
+      "value": deviceValue,
+    });
   }
 }

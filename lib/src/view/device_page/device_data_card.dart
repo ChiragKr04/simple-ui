@@ -2,8 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mezcreen/src/controller/device_controller.dart';
-import 'package:mezcreen/src/controller/room_controller.dart';
+import 'package:mezcreen/src/controller/global_controller.dart';
 import 'package:mezcreen/src/view/device_page/ac_counter.dart';
 import 'package:mezcreen/src/view/device_page/add_device_card.dart';
 import 'package:mezcreen/src/view/device_page/fan_counter.dart';
@@ -87,12 +86,8 @@ class _DeviceDataCardState extends ConsumerState<DeviceDataCard> {
                                 ? 1
                                 : 0
                             : newValue;
-                        DeviceController().updateDeviceValue(
-                          ref,
-                          widget.roomKey,
-                          widget.deviceKey,
-                          newValue,
-                        );
+                        ref.read(deviceController).updateDeviceValue(
+                            widget.roomKey, widget.deviceKey, newValue);
                       });
                     },
                   ),

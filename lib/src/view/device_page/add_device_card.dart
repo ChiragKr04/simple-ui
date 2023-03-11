@@ -1,8 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mezcreen/src/controller/device_controller.dart';
-import 'package:mezcreen/src/controller/room_controller.dart';
+import 'package:mezcreen/src/controller/global_controller.dart';
 import 'package:mezcreen/src/utils/constant_style.dart';
 import 'package:mezcreen/src/utils/utils.dart';
 import 'package:mezcreen/src/view/custom_widgets/custom_button.dart';
@@ -103,19 +102,19 @@ class DevicePopUpUI extends ConsumerWidget {
                             onPressed: () {
                               log("New device added ${ctrl.text} $dropDownValue");
                               if (isUpdation) {
-                                DeviceController().updateDeviceName(
-                                  ref,
-                                  roomKey,
-                                  deviceKey,
-                                  ctrl.text.trim(),
-                                );
+                                ref.read(deviceController).updateDevice(
+                                      roomKey,
+                                      deviceKey,
+                                      ctrl.text.trim(),
+                                    );
                               } else {
-                                DeviceController().addNewDevice(
-                                  ref,
-                                  roomKey,
-                                  ctrl.text.trim(),
-                                  dropDownValue,
-                                );
+                                ref.read(deviceController).addNewDevice(
+                                      roomKey,
+                                      ctrl.text.trim(),
+                                      dropDownValue,
+                                      MyUtils.generateDeviceValue(
+                                          dropDownValue.toLowerCase()),
+                                    );
                               }
                               Navigator.pop(context);
                             },
@@ -133,11 +132,9 @@ class DevicePopUpUI extends ConsumerWidget {
                                 width: double.infinity,
                                 child: TextButton(
                                   onPressed: () {
-                                    DeviceController().deleteDevice(
-                                      ref,
-                                      roomKey,
-                                      deviceKey,
-                                    );
+                                    ref
+                                        .read(deviceController)
+                                        .deleteDevice(roomKey, deviceKey);
                                     Navigator.pop(context);
                                   },
                                   child: Row(
