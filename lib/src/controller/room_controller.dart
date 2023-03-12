@@ -1,10 +1,11 @@
 import 'dart:developer';
 
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:mezcreen/env.dart';
+import 'package:mezcreen/src/service/firebase_service.dart';
 
 class RoomController extends ChangeNotifier {
+  final firebaseService = FirebaseService();
   void addNewRoom(
     String roomName,
     String roomType,
@@ -14,10 +15,10 @@ class RoomController extends ChangeNotifier {
       "devices": null,
       "name": roomName,
     };
-    final databaseRef = FirebaseDatabase.instance.ref();
-    databaseRef
-        .child(rootNode)
-        .child("$roomName-${DateTime.now().millisecondsSinceEpoch}")
-        .set(newData);
+    String roomId = "$roomName-${DateTime.now().millisecondsSinceEpoch}";
+    firebaseService.add(
+      path: "$rootNode/$roomId",
+      data: newData,
+    );
   }
 }

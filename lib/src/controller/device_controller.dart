@@ -1,10 +1,11 @@
 import 'dart:developer';
 
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:mezcreen/env.dart';
+import 'package:mezcreen/src/service/firebase_service.dart';
 
 class DeviceController extends ChangeNotifier {
+  final firebaseService = FirebaseService();
   void addNewDevice(
     String roomKey,
     String deviceName,
@@ -17,46 +18,36 @@ class DeviceController extends ChangeNotifier {
       "type": deviceType.toLowerCase(),
       "value": deviceValue,
     };
-    final databaseRef = FirebaseDatabase.instance.ref();
-    databaseRef
-        .child(rootNode)
-        .child(roomKey)
-        .child("devices")
-        .child("$deviceName-${DateTime.now().millisecondsSinceEpoch}")
-        .set(newData);
+    String deviceId = "$deviceName-${DateTime.now().millisecondsSinceEpoch}";
+    firebaseService.add(
+      path: "$rootNode/$roomKey/devices/$deviceId",
+      data: newData,
+    );
   }
 
   void updateDevice(String roomKey, String deviceKey, String deviceName) {
-    final databaseRef = FirebaseDatabase.instance.ref();
-    databaseRef
-        .child(rootNode)
-        .child(roomKey)
-        .child("devices")
-        .child(deviceKey)
-        .update({
+    var updationData = {
       "name": deviceName,
-    });
+    };
+    firebaseService.update(
+      path: "$rootNode/$roomKey/devices/$deviceKey",
+      data: updationData,
+    );
   }
 
   void deleteDevice(String roomKey, String deviceKey) {
-    final databaseRef = FirebaseDatabase.instance.ref();
-    databaseRef
-        .child(rootNode)
-        .child(roomKey)
-        .child("devices")
-        .child(deviceKey)
-        .remove();
+    firebaseService.delete(
+      path: "$rootNode/$roomKey/devices/$deviceKey",
+    );
   }
 
   void updateDeviceValue(String roomKey, String deviceKey, int deviceValue) {
-    final databaseRef = FirebaseDatabase.instance.ref();
-    databaseRef
-        .child(rootNode)
-        .child(roomKey)
-        .child("devices")
-        .child(deviceKey)
-        .update({
+    var updationData = {
       "value": deviceValue,
-    });
+    };
+    firebaseService.update(
+      path: "$rootNode/$roomKey/devices/$deviceKey",
+      data: updationData,
+    );
   }
 }

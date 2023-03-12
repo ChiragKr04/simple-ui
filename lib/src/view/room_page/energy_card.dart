@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mezcreen/src/view/custom_widgets/custom_icon.dart';
 
-import '../../utils/constant_colors.dart';
 import '../../utils/constant_style.dart';
 
 class EnergyCard extends StatelessWidget {
